@@ -86,9 +86,17 @@ def store_hash_onchain(package_name, version, code_hash):
                 raise e
 
         print(f"[blockchain] Tx sent: {tx_hash.hex()}")
-        print(f"[blockchain] Waiting for confirmation (timeout=120s)...")
+        print(f"[blockchain] Waiting for confirmation (timeout=30s)...")
 
-        receipt = w3.eth.wait_for_transaction_receipt(tx_hash, timeout=120)
+        try:
+            receipt = w3.eth.wait_for_transaction_receipt(tx_hash, timeout=30)
+        except Exception:
+            return {
+                'tx_hash': tx_hash.hex(),
+                'etherscan_url': f"https://sepolia.etherscan.io/tx/{tx_hash.hex()}",
+                'block_number': None,
+                'status': 'pending'
+            }
 
         result = {
             'tx_hash': receipt.transactionHash.hex(),

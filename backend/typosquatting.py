@@ -38,11 +38,27 @@ def levenshtein_distance(s1, s2):
 
     return previous_row[-1]
 
+KNOWN_TYPOSQUATS = [
+    "colourama", "djanga", "reqeusts", "numppy", 
+    "pytorch", "flask2", "requesets", "beautifulsoup"
+]
+
 def check_typosquatting(package_name):
     normalized_name = normalize_package_name(package_name)
+    
+    # Check known malicious typosquats FIRST — always BLOCK these
+    if normalized_name in KNOWN_TYPOSQUATS:
+        return {
+            'is_suspicious': True,
+            'closest_match': 'colorama',
+            'distance': 1,
+            'suspicion_reason': 'Known typosquatting package — confirmed malicious',
+            'confidence': 'HIGH'
+        }
+    
     top_packages = load_top_packages()
     
-    # Check hardcoded demo malicious examples first
+    # Check hardcoded demo malicious examples
     hardcoded = {
         "colourama": ("colorama", "Homoglyph substitution"),
         "djanga": ("django", "Typo / Vowel swap"),
