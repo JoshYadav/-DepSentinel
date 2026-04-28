@@ -1,3 +1,4 @@
+# DepSentinel - Project Dependencies
 flask
 flask-cors
 requests
