@@ -41,23 +41,25 @@ def calculate_risk(pattern_results, osv_results, typosquatting_result, ai_result
             osv_crit_count += 1
             reasons.append(f"CRITICAL Vulnerability: {vuln.get('id')}")
         elif severity == "HIGH":
-            score += 25
+            score += 20
             osv_high_count += 1
             reasons.append(f"HIGH Vulnerability: {vuln.get('id')}")
         elif severity == "MEDIUM":
-            score += 8
+            score += 5
             osv_medium_count += 1
             reasons.append(f"MEDIUM Vulnerability: {vuln.get('id')}")
         elif severity == "LOW":
-            score += 3
+            score += 2
             osv_low_count += 1
             reasons.append(f"LOW Vulnerability: {vuln.get('id')}")
             
     # --- Typosquatting Signals ---
+    has_typosquat_high = False
     if is_typosquat:
         conf = typosquatting_result.get("confidence", "LOW")
         if conf == "HIGH":
-            score += 65
+            score += 80
+            has_typosquat_high = True
             reasons.append(f"HIGH confidence Typosquatting: resembles '{typosquatting_result.get('closest_match')}' — {typosquatting_result.get('suspicion_reason')}")
         elif conf == "MEDIUM":
             score += 25
@@ -149,18 +151,28 @@ def calculate_risk(pattern_results, osv_results, typosquatting_result, ai_result
     # Cap score
     score = min(score, 100)
     
-    # Rule: MEDIUM/LOW severity OSV vulnerabilities alone can NEVER trigger a BLOCK verdict
-    # Calculate score without MEDIUM/LOW OSV to see if they are the sole cause of a HIGH score
-    non_medium_low_score = score - (osv_medium_count * 8 + osv_low_count * 3)
-    if score >= 71 and non_medium_low_score == 0:
-        score = 70
-        reasons.append("Risk score capped at 70 (MEDIUM/LOW OSV vulnerabilities alone cannot trigger BLOCK)")
+    # --- Hard BLOCK qualification rules ---
+    # Track whether a genuine BLOCK-worthy signal exists
+    has_persistence = bool(categories.get("Persistence") and _count_high_severity(categories["Persistence"]) > 0)
+    has_data_exfil = bool(categories.get("Sensitive Data Access") and _count_high_severity(categories["Sensitive Data Access"]) > 0)
+    has_critical_or_high_osv = (osv_crit_count > 0 or osv_high_count > 0)
+    
+    # A BLOCK verdict requires at least ONE of these hard signals:
+    #   1. HIGH confidence typosquatting
+    #   2. CRITICAL or HIGH severity OSV vulnerability
+    #   3. Persistence or Data Exfiltration pattern detection
+    has_block_signal = has_typosquat_high or has_critical_or_high_osv or has_persistence or has_data_exfil
+    
+    # MEDIUM CVEs alone, no matter how many, should NEVER trigger BLOCK
+    if score >= 76 and not has_block_signal:
+        score = 75
+        reasons.append("Score capped at 75 — MEDIUM/LOW vulnerabilities alone cannot trigger BLOCK")
 
     # Determine Final Verdict from static analysis
-    if score >= 71:
+    if score >= 76:
         risk_level = "HIGH"
         recommendation = "BLOCK"
-    elif score >= 41:
+    elif score >= 51:
         risk_level = "MEDIUM"
         recommendation = "ALLOW with warning"
     else:

@@ -104,8 +104,12 @@ function ScanResults() {
 
   const result = results[0];
   const { package: pkgName, version, diff, patterns, risk } = result;
+  console.log('PACKAGE DATA:', JSON.stringify(result, null, 2));
+  console.log('RECOMMENDATION:', risk?.recommendation);
+  console.log('RISK LEVEL:', risk?.risk_level);
+  console.log('RISK SCORE:', risk?.risk_score);
   const aiExplanation = risk?.ai_explanation || null;
-  const isBlock = risk.recommendation === 'BLOCK';
+  const isBlock = risk.recommendation === 'BLOCK' || risk.risk_level === 'HIGH';
   const diffText = diff?.unified_diff || 'No diff available for this package';
 
   return (

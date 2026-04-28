@@ -110,10 +110,15 @@ function Dashboard() {
       
       if (!response.ok) throw new Error(`API error: ${response.status}`);
       const data = await response.json();
+      console.log('DepSentinel API Response:', JSON.stringify(data, null, 2));
       
-      const hasBlock = data.results.some(r => r.risk.recommendation === 'BLOCK');
+      const hasBlock = data.results.some(
+        r => r.risk?.recommendation === 'BLOCK' || r.risk?.risk_level === 'HIGH'
+      );
       if (hasBlock) {
-        const blockedPkg = data.results.find(r => r.risk.recommendation === 'BLOCK');
+        const blockedPkg = data.results.find(
+          r => r.risk?.recommendation === 'BLOCK' || r.risk?.risk_level === 'HIGH'
+        );
         navigate('/alert-block', { state: { packageData: blockedPkg, allResults: data.results } });
       } else {
         navigate('/scan-results', { state: { results: data.results } });
