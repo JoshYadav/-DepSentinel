@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="shieldGradFull" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1d4ed8" />
+      <stop offset="100%" stop-color="#3B82F6" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Shield Icon -->
+  <g transform="translate(0, 0)">
+    <path d="M 10,10 L 90,10 L 90,60 C 90,95 50,115 50,115 C 50,115 10,95 10,60 Z" 
+          fill="url(#shieldGradFull)" 
+          stroke="#60a5fa" 
+          stroke-width="2" 
+          filter="drop-shadow(0 0 8px rgba(59,130,246,0.6))" />
+          
+    <path d="M 40,45 V 35 A 10 10 0 0 1 60 35 V 45" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" />
+    <path d="M 30,45 V 75 H 55 C 65,75 70,70 70,60 C 70,50 65,45 55,45 Z" fill="#ffffff" />
+    <circle cx="50" cy="56" r="3" fill="#1d4ed8" />
+    <path d="M 48,58 L 47,65 H 53 L 52,58 Z" fill="#1d4ed8" />
+  </g>
+  
+  <!-- Text -->
+  <text x="120" y="75" font-family="'Inter', sans-serif" font-weight="800" font-size="56" fill="#ffffff" letter-spacing="-1">DepSentinel</text>
+</svg>

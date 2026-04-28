@@ -1,0 +1,7 @@
+flask
+flask-cors
+requests
+packaging
+google-generativeai
+web3
+python-dotenv

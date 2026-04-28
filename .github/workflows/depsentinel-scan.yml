@@ -1,0 +1,43 @@
+name: DepSentinel Security Scan
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    name: Scan Dependencies for Threats
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install DepSentinel dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+
+      - name: Run DepSentinel Security Scan
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ALCHEMY_RPC_URL: ${{ secrets.ALCHEMY_RPC_URL }}
+          WALLET_PRIVATE_KEY: ${{ secrets.WALLET_PRIVATE_KEY }}
+          WALLET_ADDRESS: ${{ secrets.WALLET_ADDRESS }}
+        run: |
+          cd backend
+          python scan_ci.py requirements.txt
+
+      - name: Upload Scan Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: depsentinel-report
+          path: backend/scan_report.json

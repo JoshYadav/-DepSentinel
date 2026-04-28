@@ -1,0 +1,1 @@
+malicious-pkg==1.0.0
