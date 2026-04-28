@@ -31,7 +31,11 @@ def query_osv(package_name, version):
             elif "severity" in vuln:
                  for s in vuln["severity"]:
                      if s["type"] == "CVSS_V3":
-                          score = float(s["score"].split(":")[-1].split("/")[0][-3:]) # crude CVSS parse or just use string
+                          try:
+                              raw = s.get("score", "0")
+                              score = float(raw.split(":")[-1].split("/")[0][-3:])
+                          except (ValueError, IndexError, AttributeError):
+                              score = 0.0
                           severity = s["score"]
                           
             # Fallback text search if severity is not structured well
