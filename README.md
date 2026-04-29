@@ -269,7 +269,11 @@ DepSentinel/
 
 ## 👥 Team
 
-Built at **Chitkara University Hackathon 2026**
+Built at **Chitkara University Hackathon 2026** by:
+
+- **Josh Yadav (Team Lead)** — Cybersecurity Division, Core Threat Detection Pipeline, Gemini AI Integration, Threat Intelligence
+- **Vansh Tiwari** — Frontend Architecture, Analytics Dashboard UI, Data Visualizations, CI/CD Pipeline Integration
+- **Mayank Jain** — Backend APIs, Ethereum Blockchain Integrity Verification, System Integration, UI Refinement
 
 ---
 
