@@ -193,7 +193,6 @@ pip install -r requirements.txt
 python main.py
 ```
 
-The backend API will be available at `http://localhost:5000`.
 
 ### Frontend
 
@@ -203,11 +202,10 @@ npm install
 npm run dev
 ```
 
-The frontend will be available at `http://localhost:5173`.
 
 ### Environment Variables
 
-Create a `.env` file inside the `backend/` folder:
+Created a `.env` file inside the `backend/` folder:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key
@@ -223,7 +221,6 @@ WALLET_ADDRESS=your_ethereum_wallet_address
 | `WALLET_PRIVATE_KEY` | Ethereum wallet private key for signing transactions | MetaMask or any Ethereum wallet |
 | `WALLET_ADDRESS` | Ethereum wallet address | Your wallet |
 
-> ⚠️ **Never commit your `.env` file.** It is listed in `.gitignore`.
 
 ---
 
@@ -269,7 +266,7 @@ DepSentinel/
 
 ## 👥 Team
 
-Built at **Chitkara University Hackathon 2026** by:
+Built at **HackIndia Hackathon 2026** by:
 
 - **Josh Yadav (Team Lead)** — Cybersecurity Division, Core Threat Detection Pipeline, Gemini AI Integration, Threat Intelligence
 - **Vansh Tiwari** — Frontend Architecture, Analytics Dashboard UI, Data Visualizations, CI/CD Pipeline Integration
