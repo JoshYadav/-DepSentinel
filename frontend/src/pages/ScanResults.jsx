@@ -351,7 +351,7 @@ function ScanResults() {
 
                 {/* Powered by label */}
                 <p className="text-text-muted/40 text-[10px] text-right mt-3 relative z-10 font-mono">
-                  Powered by Gemini 2.5 Flash
+                  Powered by Gemini 2.0 Flash
                 </p>
               </>
             ) : (
