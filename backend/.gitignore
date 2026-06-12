@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+
+# Database
+ledger.json
+
+# Environment
+.env
+.venv/
+venv/
+ENV/
