@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0 <=20.x"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -12,16 +15,14 @@
   "dependencies": {
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.0",
-    "@rolldown/binding-win32-x64-msvc": "^1.0.0-rc.17",
     "framer-motion": "^12.38.0",
-    "lucide-react": "^1.9.0",
+    "lucide-react": "^0.383.0",
     "react": "^19.2.5",
     "react-countup": "^6.5.3",
     "react-dom": "^19.2.5",
     "react-is": "^19.2.7",
     "react-syntax-highlighter": "^16.1.1",
     "recharts": "^3.8.1",
-    "rolldown": "^1.0.0-rc.17",
     "three": "^0.184.0"
   },
   "devDependencies": {
