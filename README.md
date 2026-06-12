@@ -21,6 +21,12 @@
 
 ---
 
+## 🌐 Live Demo
+
+**Experience the live application here:** [https://depsentinel.vercel.app](https://depsentinel.vercel.app)
+
+---
+
 ## 📌 The Problem
 
 In 2020, the **SolarWinds attack** compromised **33,000+ organizations** — including NASA, the Pentagon, and Microsoft. Attackers silently injected malicious code into a legitimate software update. The attack went **undetected for 9 months**.
@@ -145,14 +151,37 @@ DepSentinel **scans itself** on every push and pull request:
 
 ---
 
-## 🧪 Demo Test Cases
+## 🧪 Demo Files
 
-| Input | Expected Result |
-|-------|-----------------|
-| `colourama==0.3.9` | 🔴 HIGH — BLOCK (typosquatting of `colorama`) |
-| `Pillow==9.0.0` | 🟡 MEDIUM/HIGH — Real CVEs from OSV database |
-| `requests==2.31.0` | 🟢 LOW — ALLOW + Etherscan blockchain link |
-| `flask==2.3.0` | 🟢 LOW — ALLOW (trusted top-PyPI package) |
+Download and upload these files to test different scenarios:
+
+### 🔴 Threat Detection Demo
+```
+requests==2.28.0
+flask==3.0.0
+numpy==1.26.0
+```
+**Expected:** `requests` blocked with CRITICAL threat — Known CVE, credential leak vulnerabilities detected
+
+---
+
+### 🟡 Typosquatting Detection Demo  
+```
+colourama==0.4.4
+flask==3.0.0
+numpy==1.26.0
+```
+**Expected:** `colourama` flagged as typosquat of popular `colorama` package
+
+---
+
+### 🟢 Clean Packages Demo (Blockchain Verification)
+```
+flask==3.0.0
+numpy==1.26.0
+click==8.1.7
+```
+**Expected:** All packages allowed — SHA-256 hashes recorded on Ethereum Sepolia testnet with live Etherscan transaction links
 
 ---
 
