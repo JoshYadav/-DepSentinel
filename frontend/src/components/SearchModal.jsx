@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, Package, Shield, AlertTriangle, Clock } from 'lucide-react';
+import API_BASE from '../config';
 
 function SearchModal({ isOpen, onClose }) {
   const [query, setQuery] = useState('');
@@ -20,7 +21,7 @@ function SearchModal({ isOpen, onClose }) {
     const fetchFilteredLedger = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch('http://localhost:5000/api/ledger');
+        const res = await fetch(`${API_BASE}/api/ledger`);
         if (res.ok) {
           const data = await res.json();
           let results = data.ledger || [];

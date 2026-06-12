@@ -5,6 +5,7 @@ import {
   Clock, Link2, Shield, ShieldCheck, ShieldX, AlertTriangle,
   CheckCircle, XCircle, Database, Hash, ArrowRight, Loader2, ExternalLink
 } from 'lucide-react';
+import API_BASE from '../config';
 
 function LiveClock() {
   const [time, setTime] = useState(new Date());
@@ -28,7 +29,7 @@ function Ledger() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/ledger')
+    fetch(`${API_BASE}/api/ledger`)
       .then(res => res.json())
       .then(data => {
         setLedgerData(data.ledger || []);

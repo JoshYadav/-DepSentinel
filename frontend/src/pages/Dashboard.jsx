@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Shield, Package, AlertTriangle, Clock, FileText, Zap, ArrowRight, Scan, Lock, ArrowUp } from 'lucide-react';
 
 import ScanLoader from '../components/ScanLoader';
+import API_BASE from '../config';
 import FloatingParticles from '../components/dashboard/FloatingParticles';
 import RiskGauge from '../components/dashboard/RiskGauge';
 import StatCard from '../components/dashboard/StatCard';
@@ -39,7 +40,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchLedgerStats = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/ledger');
+        const res = await fetch(`${API_BASE}/api/ledger`);
         if (!res.ok) return;
         const data = await res.json();
         
@@ -102,7 +103,7 @@ function Dashboard() {
     setIsScanning(true);
     setError('');
     try {
-      const response = await fetch('http://localhost:5000/api/scan', {
+      const response = await fetch(`${API_BASE}/api/scan`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ requirements_text: requirementsText }),

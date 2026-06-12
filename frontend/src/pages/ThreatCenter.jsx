@@ -6,6 +6,7 @@ import {
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis 
 } from 'recharts';
 import { Shield, ShieldAlert, CheckCircle, Activity, Package, AlertTriangle, Users, Key, Eye, Layers, Globe } from 'lucide-react';
+import API_BASE from '../config';
 
 // Custom Tooltip for Recharts
 const CustomTooltip = ({ active, payload, label }) => {
@@ -91,7 +92,7 @@ function ThreatCenter() {
   };
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/ledger')
+    fetch(`${API_BASE}/api/ledger`)
       .then(res => res.json())
       .then(data => {
         setLedgerData(data.ledger || []);
