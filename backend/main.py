@@ -1,3 +1,4 @@
+import os
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from flask import Flask, request, jsonify, make_response
@@ -230,4 +231,5 @@ def handle_exception(e):
 if __name__ == '__main__':
     # Pre-load top packages on startup
     load_top_packages()
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
