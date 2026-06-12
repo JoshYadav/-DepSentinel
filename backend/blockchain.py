@@ -75,13 +75,15 @@ def store_hash_onchain(package_name, version, code_hash):
         try:
             tx['nonce'] = base_nonce
             signed_tx = w3.eth.account.sign_transaction(tx, private_key)
-            tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
+            raw_tx = getattr(signed_tx, 'rawTransaction', None) or getattr(signed_tx, 'raw_transaction', None)
+            tx_hash = w3.eth.send_raw_transaction(raw_tx)
         except Exception as e:
             if 'nonce' in str(e).lower() or 'replacement' in str(e).lower() or 'underpriced' in str(e).lower():
                 tx['nonce'] = base_nonce + 1
                 tx['gasPrice'] = int(w3.eth.gas_price * 1.1)
                 signed_tx = w3.eth.account.sign_transaction(tx, private_key)
-                tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
+                raw_tx = getattr(signed_tx, 'rawTransaction', None) or getattr(signed_tx, 'raw_transaction', None)
+                tx_hash = w3.eth.send_raw_transaction(raw_tx)
             else:
                 raise e
 
